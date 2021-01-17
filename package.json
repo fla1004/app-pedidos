@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon --exec babel-node src/index.js",
+    "build": "babel src/ --out-dir dist",
+    "serve": "node dist/index.js"
+    
   },
   "keywords": [],
   "author": "",
@@ -13,6 +16,10 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
     "morgan": "^1.10.0"
   }
 }
