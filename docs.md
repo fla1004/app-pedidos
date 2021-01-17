@@ -6,6 +6,7 @@
 
 ```
 git init
+
 #El resultado 
 #Initialized empty Git repository in C:/Users/Richard/Desktop/Tesis Fla/Web/gordo/.git/
 
