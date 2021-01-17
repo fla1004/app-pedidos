@@ -7,13 +7,13 @@
     "start": "nodemon --exec babel-node src/index.js",
     "build": "babel src/ --out-dir dist",
     "serve": "node dist/index.js"
-    
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.11.12"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",

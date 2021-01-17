@@ -1,6 +1,9 @@
-const listar = function(req,res)
+const cliente = require("./../models/Cliente")
+
+const listar = async function(req,res)
 {
-    res.json({mensaje: "Lista cliente"});
+    var datos = await cliente.find();
+    res.json(datos);
 }
 const mostrar= function(req,res)
 {
@@ -8,9 +11,14 @@ const mostrar= function(req,res)
 }
 const guardar = function(req,res)
 {
+    const clie = new cliente({
+        nombre: 'Flavia', 
+        apellidos:'Claros',
+    });
+    clie.save();
     res.json({mensaje: "guardar cliente"});
 }
-const modificar = function(req,res){
+const modificar =    function(req,res){
     res.json({mensaje: "cliente modificado"});
 }
 const eliminar = function(req,res){
