@@ -28,10 +28,6 @@ const guardar =  async function(req,res)
         });   
 }
 
-
-
-
-
 const listar = async function(req,res)
 {
     try
@@ -45,48 +41,7 @@ const listar = async function(req,res)
     }
 }
 
-const mostrar= async function(req,res)
-{
-    let id = req.params.id;
-    try{
-        var user = await Usuario.findById(id);
-        res.json(user);
-    }
-    catch(error)
-    {
-        res.json({mensaje: "ERROR"});
-    }
-}
-    
-
-const modificar =  async function(req,res){
-    let id = req.params.id;
-    try{
-        const user = await Usuario.findById(id);
-        const user_mod = await user.update(req.body);
-        res.json({mensaje: "Usuario modificado", user_mod});
-    }
-    catch(error)
-    {
-        res.json("ERROR",error);
-    }
-}
-const eliminar = async function(req,res){
-    let id = req.params.id;
-    try{
-        const user = await Usuario.findById(id);
-        const user_el = await user.delete(req.body);
-        res.json({mensaje: "Usuario eliminado", user_el});
-    }
-    catch(error)
-    {
-        res.json("ERROR",error);
-    }
-}
 module.exports = {
     listar,
-    mostrar,
-    guardar,
-    modificar,
-    eliminar
+    guardar
 }
