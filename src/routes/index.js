@@ -1,9 +1,13 @@
 const ClienteController = require("./../controllers/ClienteController")
 const ProductoController = require("./../controllers/ProductoController")
+const authController = require("./../controllers/AuthController");
+const UsuarioController = require("./../controllers/UsuarioController");
 const rutas = (app) => {
 
     //rutas de login 
+    app.post("/login",authController.login);
     //rutas de usuario
+    app.post("/usuario", UsuarioController.guardar);
     //rutas cliente
     app.get("/cliente", ClienteController.listar);
     app.get("/cliente/:id", ClienteController.mostrar);

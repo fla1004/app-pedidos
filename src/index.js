@@ -11,6 +11,9 @@
     const app = express();
     app.use(morgan("dev"));
 
+    app.use(express.json());
+    app.use(express.urlencoded({extended:true}));
+
     app.set("port", process.env.PORT || config.port); //guarar variables lobales 
 
 // CONEXION A LA BASE DE DATOS 

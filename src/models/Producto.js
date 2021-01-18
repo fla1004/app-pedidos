@@ -7,6 +7,9 @@ const ProductoSchema = new mongoose.Schema({
         stock: {type:Number, required:true, default:0},
         imagen: {type: String, required:false, trim:true},
         descripcion: {type: String, required:false, trim:true},
+    },
+    {
+        timestamps:true,
     });
     
 module.exports = mongoose.model("Producto",ProductoSchema);

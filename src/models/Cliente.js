@@ -6,6 +6,9 @@ const ClienteSchema = mongoose.Schema({
     empresa: {type: String, required:false, trim:true},
     email: {type: String, required:false, trim:true},
     telefono: {type: String, required:false, trim:true},
+},
+{
+    timestamps:true,
 });
 
 module.exports = mongoose.model("Cliente",ClienteSchema);
