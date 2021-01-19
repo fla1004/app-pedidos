@@ -2,6 +2,8 @@ const ClienteController = require("./../controllers/ClienteController")
 const ProductoController = require("./../controllers/ProductoController")
 const authController = require("./../controllers/AuthController");
 const UsuarioController = require("./../controllers/UsuarioController");
+const authMiddleware = require("./../middlewares/authMiddlewar");
+
 //const PedidoController = require("./../controllers/PedidoController");
 
 const rutas = (app) => {
@@ -9,8 +11,8 @@ const rutas = (app) => {
     //rutas de login 
     app.post("/login",authController.login);
     //rutas de usuario
-    app.post("/usuario", UsuarioController.guardar);
-    app.get("/usuario", UsuarioController.listar);
+    app.post("/usuario",UsuarioController.guardar);
+    app.get("/usuario",authMiddleware.vericarAuth, UsuarioController.listar);
     //rutas cliente
     app.get("/cliente", ClienteController.listar);
     app.get("/cliente/:id", ClienteController.mostrar);

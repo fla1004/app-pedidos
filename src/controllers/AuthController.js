@@ -31,13 +31,13 @@ const login = async function login(req,res)
             });
 
             res.json({
-                //access_token:token,
-                //Usuario: {
-                  //  _id: user._id,
+                access_token:token,
+                Usuario: {
+                    _id: user._id,
                     usuario: user.usuario,
                     correo: user.correo,
                     fecha: new Date(),
-                //}
+                }
             });
         }
         else{
