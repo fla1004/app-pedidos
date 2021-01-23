@@ -1,6 +1,7 @@
-const {mongoose,Schema} = require("mongoose");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const PedidoSchema = new mongoose.Schema({
+const PedidoSchema = mongoose.Schema({
 
     cliente: {type:Schema.Types.ObjectId, ref:"Cliente"},
     productos: [
