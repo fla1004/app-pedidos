@@ -20,12 +20,26 @@
     mongoose.connect('mongodb://localhost:27017/app-pedidos', {
         useNewUrlParser:true,
         useUnifiedTopology: true,
+        useFindAndModify: false
     }).then((db)=>{
         console.log("conectado...");
     }).catch((error)=>
     {
         console.log("Error",error);
     })
+
+//HABILITANDO CORS PARA PETICIONES DEL LADO DEL CLIENTE
+    app.use(function(req, res, next){
+        //Sitio web al que se desea permitir que se conecte 
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        
+        //habilitar los encabezados que desea permitir
+        res.setHeader("Access-Control-Allow-Headers",
+                      "content-type, X-Requested-With, Authorization"
+                    );
+        res.setHeader("Access-Control-Allow-Methods","GET, POST, PUT,DELETE");
+        next();
+    });
     
 // HABILITAR RUTA
     routes.rutas(app);

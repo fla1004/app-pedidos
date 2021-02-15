@@ -4,33 +4,54 @@ const authController = require("./../controllers/AuthController");
 const UsuarioController = require("./../controllers/UsuarioController");
 const authMiddleware = require("./../middlewares/authMiddlewar");
 const PedidoController = require("./../controllers/PedidoController");
+const CategoriaController = require("./../controllers/CategoriaController");
+
+const multipart = require('connect-multiparty');
+var path = multipart({uploadDir: './src/image/productos'})
 
 const rutas = (app) => {
 
     //rutas de login 
     app.post("/login",authController.login);
+
     //rutas de usuario
-    app.post("/usuario",authMiddleware.vericarAuth,UsuarioController.guardar);
+    app.post("/usuario",UsuarioController.guardar);
     app.get("/usuario",authMiddleware.vericarAuth, UsuarioController.listar);
-    //rutas cliente
-    app.get("/cliente",authMiddleware.vericarAuth, ClienteController.listar);
-    app.get("/cliente/:id",authMiddleware.vericarAuth, ClienteController.mostrar);
+    app.get("/usuario/:id" ,authMiddleware.vericarAuth, UsuarioController.mostrar_id);
+    app.delete("/usuario/:id",authMiddleware.vericarAuth, UsuarioController.eliminar);
+    app.put("/usuario/:id",UsuarioController.modificar);
+
+    //ruta categoria
+    app.post("/categoria", authMiddleware.vericarAuth, CategoriaController.guardar);
+    app.get("/categoria",authMiddleware.vericarAuth,CategoriaController.mostrar);
+    app.get("/categoria/select/:id", CategoriaController.mostrar_id);
+    app.put("/categoria/:id", CategoriaController.modificar);
+    app.delete("/categoria/:id", CategoriaController.eliminar);
+
+    //ruta producto
+    app.post("/producto",/*authMiddleware.vericarAuth,*/ path, ProductoController.guardar);
+    app.get("/producto/:nombre",authMiddleware.vericarAuth, ProductoController.mostrar);
+    app.put("/producto/:id/:img",authMiddleware.vericarAuth, path , ProductoController.modificar);
+    app.delete("/producto/:id",authMiddleware.vericarAuth, ProductoController.eliminar);
+    app.get("/producto/img/:img", ProductoController.get_img);
+    app.get("/producto",authMiddleware.vericarAuth,ProductoController.listar);
+
+    //rutas cliente 
     app.post("/cliente",authMiddleware.vericarAuth, ClienteController.guardar);
+    app.get("/cliente",authMiddleware.vericarAuth, ClienteController.listar);
+    app.get("/cliente/select/:id",authMiddleware.vericarAuth, ClienteController.listar_id);
     app.put("/cliente/:id",authMiddleware.vericarAuth, ClienteController.modificar);
     app.delete("/cliente/:id",authMiddleware.vericarAuth, ClienteController.eliminar);
-    //ruta producto
-    app.get("/producto",authMiddleware.vericarAuth, ProductoController.listar);
-    app.get("/producto/:id",authMiddleware.vericarAuth, ProductoController.mostrar);
-    app.post("/producto",authMiddleware.vericarAuth, ProductoController.guardar);
-    app.put("/producto/:id",authMiddleware.vericarAuth, ProductoController.modificar);
-    app.delete("/producto/:id",authMiddleware.vericarAuth, ProductoController.eliminar);
+
+
     //ruta pedido
-    app.post("/pedido", authMiddleware.vericarAuth,PedidoController.guardar);
+   /*  app.post("/pedido", authMiddleware.vericarAuth,PedidoController.guardar);
     app.get("/pedido", authMiddleware.vericarAuth, PedidoController.listar);
-    /* 
+    
     app.get("/pedido/:id", PedidoController.mostrar);
     app.put("/pedido/:id", PedidoController.modificar);
     app.delete("/pedido/:id", PedidoController.eliminar);*/
+   
 }
 
 module.exports = {

@@ -1,10 +1,42 @@
 const Cliente = require("./../models/Cliente");
 
+const guardar = function(req, res ){
+
+    let data = req.body;
+
+    try{
+        const clie = new Cliente();
+
+        clie.nombre = data.nombre;
+        clie.apellidos = data.apellidos;
+        clie.ci = data.ci;
+        clie.email = data.email;
+        clie.telefono = data.telefono;
+
+       clie.save((err, clie_save)=>{
+            if(err){
+                res.json({mensaje: 'Error en el servidor'});
+            }
+            else{
+                if(clie_save){
+                    res.json({Clientes: clie_save});
+                }
+                else{
+                    res.json({mensaje: 'No se registro al usuario'});
+                }
+            }
+        })
+    }catch(err){
+        res.json('Error',err);
+    }
+}
+
+
 const listar = async function(req,res)
 {
     try
     {
-        var datos = await Cliente.find();
+        const datos = await Cliente.find();
         res.json(datos);
     }
     catch(error)
@@ -12,55 +44,96 @@ const listar = async function(req,res)
         res.json("ERROR", error);
     }
 }
-
-const mostrar= async function(req,res)
+const listar_id = function(req,res)
 {
+    let data = req. body;
     let id = req.params.id;
+
     try{
-        var clie = await Cliente.findById(id);
-        res.json(clie);
+        Cliente.findOne({_id: id},(err, cli_lista)=>{
+            if(err){
+                res.json({mensaje:'Error en el servidor'});
+            }
+            else
+            {
+                if(cli_lista)
+                {
+                    res.json({Clientes: cli_lista});
+                }
+                else
+                {
+                    res.json({mensaje: 'No se encontro al cliente'});
+                }
+            }
+        })
     }
-    catch(error)
+    catch(err)
     {
-        res.json({mensaje: "ERROR"});
+        res.json('Error',err);
     }
-}
     
-const guardar =  function(req,res)
-{    
-    const clie = new Cliente(req.body);
-    clie.save();
-    res.json({mensaje: "cliente guardado",clie});
+}
+const modificar =  function(req,res){
+    let id = req.params.id;
+    let data = req.body;
     
-}
-const modificar =  async function(req,res){
-    let id = req.params.id;
     try{
-        const clie = await Cliente.findById(id);
-        const clie_mod = await clie.update(req.body);
-        res.json({mensaje: "Cliente modificado", clie_mod});
+        Cliente.findByIdAndUpdate({_id: id}, {
+            nombre : data.nombre,
+            apellidos : data.apellidos,
+            ci : data.ci,
+            email : data.email,
+            telefono : data.telefono },
+            (err, clie_mod) => {
+                if(err){
+                    res.json({mensaje: 'Error en el servidor'});
+                }
+                else{
+                    if(clie_mod){
+                        res.json({Cliente_mod: clie_mod});
+                    }
+                    else{
+                        res.json({mensaje: 'No se modifico al cliente'});
+                    }
+                }
+            }
+        )
     }
-    catch(error)
+    catch(err)
     {
-        res.json("ERROR",error);
+        res.json('Error',err);
     }
 }
-const eliminar = async function(req,res){
+const eliminar = function(req, res){
+
     let id = req.params.id;
+
     try{
-        const clie = await Cliente.findById(id);
-        const clie_el = await clie.delete(req.body);
-        res.json({mensaje: "Cliente eliminado", clie_el});
+        Cliente.findOneAndRemove({_id:id}, (err, clie_eliminado)=>{
+            if(err){
+                res.json({mensaje: 'Error en el servidor'});
+            }
+            else{
+                if(clie_eliminado){
+                    res.json({Cliente_elimnado: clie_eliminado});
+                }
+                else{
+                    res.json({mensaje: 'No se modifico al cliente'});
+                }
+            }
+        })
     }
-    catch(error)
+    catch(err)
     {
-        res.json("ERROR",error);
+        res.json('Error',err);
     }
 }
+
+
 module.exports = {
-    listar,
-    mostrar,
     guardar,
+    listar,
+    listar_id,
     modificar,
     eliminar
 }
