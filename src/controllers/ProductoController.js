@@ -51,7 +51,8 @@ const guardar = function(req,res)
             prod.stock = data.stock;
             prod.imagen = "sin imagen";
             prod.descripcion = data.descripcion;
-
+            prod.idCategoria = data.idCategoria;
+            
             prod.save((err, prod_save)=>{
                 if(err){
                     res.status(500).send({mensaje: "Error en el servidor"});
@@ -110,12 +111,12 @@ const modificar =  function(req,res){
     let img = req.params.img;
 
     try{
-        if(req.files)
+        if(req.files.imagen)
         {
-            fs.unlink('./src/image/productos/'+ img ,(error)=>{
+            fs.unlink('./src/image/productos/'+img ,(error)=>{
                 if(error) {console.log(error)};
             });
-
+            
             var imagen_path = req.files.imagen.path;
             
             var name = imagen_path.split('\\');
@@ -149,7 +150,33 @@ const modificar =  function(req,res){
             )
         }
         else
-        { res.json({mensaje: 'Debe agregar una imagen'})}
+        { 
+            Producto.findByIdAndUpdate(
+                {_id:id},
+                {nombre: data.nombre,
+                 precio_compra: data.precio_compra,
+                 precio_venta: data.precio_venta,
+                 stock: data.stock,
+                 descripcion: data.descripcion,
+                 idCategoria: data.idCategoria},
+                
+                (error, prod_mod) => {
+                    if(error){
+                        res.json({mensaje: 'Error en el servidor'});
+                    }
+                    else{
+                        if(prod_mod)
+                        {
+                            res.json({mensaje: prod_mod})
+                        }
+                        else
+                        {
+                            res.status(400).send({mensaje: 'No se EDITO el producto'});
+                        }
+                    }
+                }
+            )
+        }
     }
     catch(error)
     {

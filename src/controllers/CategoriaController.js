@@ -58,7 +58,7 @@ const mostrar = async function(req,res)
     try
     {
         const datos = await Categoria.find();
-        res.json(datos);
+        res.json({Categoria: datos});
     }
     catch(error)
     {

@@ -3,9 +3,8 @@ const ProductoController = require("./../controllers/ProductoController")
 const authController = require("./../controllers/AuthController");
 const UsuarioController = require("./../controllers/UsuarioController");
 const authMiddleware = require("./../middlewares/authMiddlewar");
-const PedidoController = require("./../controllers/PedidoController");
 const CategoriaController = require("./../controllers/CategoriaController");
-
+const VentaController = require("./../controllers/VentaController");
 const multipart = require('connect-multiparty');
 var path = multipart({uploadDir: './src/image/productos'})
 
@@ -31,7 +30,7 @@ const rutas = (app) => {
     //ruta producto
     app.post("/producto",/*authMiddleware.vericarAuth,*/ path, ProductoController.guardar);
     app.get("/producto/:nombre",authMiddleware.vericarAuth, ProductoController.mostrar);
-    app.put("/producto/:id/:img",authMiddleware.vericarAuth, path , ProductoController.modificar);
+    app.put("/producto/:id/:img",/*authMiddleware.vericarAuth, */ path , ProductoController.modificar);
     app.delete("/producto/:id",authMiddleware.vericarAuth, ProductoController.eliminar);
     app.get("/producto/img/:img", ProductoController.get_img);
     app.get("/producto",authMiddleware.vericarAuth,ProductoController.listar);
@@ -44,11 +43,12 @@ const rutas = (app) => {
     app.delete("/cliente/:id",authMiddleware.vericarAuth, ClienteController.eliminar);
 
 
-    //ruta pedido
-   /*  app.post("/pedido", authMiddleware.vericarAuth,PedidoController.guardar);
-    app.get("/pedido", authMiddleware.vericarAuth, PedidoController.listar);
-    
-    app.get("/pedido/:id", PedidoController.mostrar);
+    //ruta venta
+    app.post("/pedido",VentaController.registrar);
+    app.get("/pedido/:id", VentaController.datos_venta);
+    app.get('/pedido',VentaController.listado_venta);
+    app.get('/pedido/data/:id',VentaController.detalles_venta);
+    /*app.get("/pedido/:id", PedidoController.mostrar);
     app.put("/pedido/:id", PedidoController.modificar);
     app.delete("/pedido/:id", PedidoController.eliminar);*/
    
