@@ -14,7 +14,7 @@
     app.use(express.json());
     app.use(express.urlencoded({extended:true}));
 
-    app.set("port", process.env.PORT || config.port); //guarar variables lobales 
+    app.set("port", process.env.PORT || config.port); //guadrar variables globales 
 
 // CONEXION A LA BASE DE DATOS 
     mongoose.connect('mongodb://localhost:27017/app-pedidos', {

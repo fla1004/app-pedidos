@@ -5,6 +5,8 @@ const UsuarioController = require("./../controllers/UsuarioController");
 const authMiddleware = require("./../middlewares/authMiddlewar");
 const CategoriaController = require("./../controllers/CategoriaController");
 const VentaController = require("./../controllers/VentaController");
+const CatalogoController = require("./../controllers/CatalogoController");
+
 const multipart = require('connect-multiparty');
 var path = multipart({uploadDir: './src/image/productos'})
 
@@ -51,6 +53,10 @@ const rutas = (app) => {
     /*app.get("/pedido/:id", PedidoController.mostrar);
     app.put("/pedido/:id", PedidoController.modificar);
     app.delete("/pedido/:id", PedidoController.eliminar);*/
+
+
+    //ruta Catalogo
+    app.get('/catalogo/:id', CatalogoController.cat);
    
 }
 
